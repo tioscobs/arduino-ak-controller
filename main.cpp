@@ -5,6 +5,7 @@
 #include <SerialPort.hpp>
 #include <SerialPort.cpp>
 #include <iostream>
+#include <windows.h>
 
 using namespace std;
 
@@ -24,7 +25,12 @@ int main(){
     // Start loop 'til disconnect
     while(arduino->isConnected()){
         if(arduino->readSerialPort(received_data, BYTE_LEN)){
-            cout << received_data[0];
+            cout << received_data[0] << endl;
+            if(received_data[0] == '0'){
+                cout << "nao atirando" << endl << endl; 
+            }else if(received_data[0] == '1'){
+                cout << "atirando" << endl << endl;
+            }
         }
     }
     
