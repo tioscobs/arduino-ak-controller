@@ -1,5 +1,5 @@
 #define TRIGGER_PIN A0
-#define TRIGGER_MS 400
+#define TRIGGER_MS 200
 #define BUTTON_PIN A1
 
 bool trigger_down = false;
@@ -30,15 +30,18 @@ void loop() {
   if(analogRead(TRIGGER_PIN) > 0){
     if(!(trigger_down)){
       trigger_down = true;
-      Serial.println("1"); // One-click
+      Serial.print("1\n"); // One-click
       delay(TRIGGER_MS);
     }else if (!(trigger_hold) && !(mode == 0)){
       trigger_hold = true;
-      Serial.println("2"); // Holding
+      Serial.print("2\n"); // Holding
     }
   }else if(analogRead(TRIGGER_PIN) <= 0 && trigger_down){
     trigger_down = false;
-    if(trigger_hold) trigger_hold = false;
+    if(trigger_hold){
+      trigger_hold = false;
+      Serial.print("0\n");
+    }
   }
 
   // Switching mode system
